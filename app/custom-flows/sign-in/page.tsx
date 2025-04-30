@@ -49,7 +49,7 @@ export default function CustomSignInPage() {
     try {
       setError("");
       setErrors([]);
-      debugger;
+
       await signIn.authenticateWithRedirect({
         strategy,
         redirectUrl: "/custom-flows/sso-callback",
