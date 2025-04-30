@@ -27,7 +27,7 @@ async function updateBirthDate(formData: FormData) {
     console.error(error);
   }
 
-  redirect("/birth-date");
+  redirect("/birthdate");
 }
 
 export default async function BirthDatePage() {
