@@ -6,6 +6,7 @@ const isPublicRoute = createRouteMatcher([
   "/organization-profile(.*)",
   "/",
   "/custom-flows(.*)",
+  "/forgot-password(.*)",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
