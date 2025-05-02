@@ -2,7 +2,7 @@
 
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import React from "react";
-import useActiveOrg from "../components/ActiveOrgCheck";
+import useActiveOrg from "../components/hooks/useActiveOrg";
 import DashboardNav from "../components/DashboardNav";
 
 export default function DashboardLayout({

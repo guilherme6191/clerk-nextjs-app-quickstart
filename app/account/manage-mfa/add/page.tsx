@@ -5,9 +5,10 @@ import { TOTPResource } from "@clerk/types";
 import Link from "next/link";
 import * as React from "react";
 import { QRCodeSVG } from "qrcode.react";
-import { GenerateBackupCodes } from "../page";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { GenerateBackupCodes } from "@/app/components/GenerateBackupCodes";
 
 // ref: https://clerk.com/docs/custom-flows/manage-totp-based-mfa
 
@@ -23,6 +24,7 @@ function AddTotpScreen({
   const { user } = useUser();
   const [totp, setTOTP] = React.useState<TOTPResource | undefined>(undefined);
   const [displayFormat, setDisplayFormat] = React.useState<DisplayFormat>("qr");
+  //
   const createTOTP = useReverification(() => user?.createTOTP());
 
   // verification state
