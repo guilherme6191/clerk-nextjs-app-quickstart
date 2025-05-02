@@ -10,6 +10,8 @@ import {
 import { ptBR } from "@clerk/localizations";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { dark } from "@clerk/themes";
+import { neobrutalism } from "@clerk/themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +45,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={localization}>
+    <ClerkProvider
+      localization={localization}
+      appearance={{
+        baseTheme: neobrutalism,
+      }}
+    >
       <html lang="pt-BR">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
