@@ -81,3 +81,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.cl-formButtonPrimary {
+  font-size: 14px;
+  text-transform: none;
+  background-color: #1a10c8;
+}
+
+.cl-internal-1nuz2sv {
+  color: white;
+}
