@@ -7,8 +7,11 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { ptBR } from "@clerk/localizations";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { dark } from "@clerk/themes";
+import { neobrutalism } from "@clerk/themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +22,17 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const localization = {
+  ...ptBR,
+  signUp: {
+    start: {
+      title: "Crie sua conta",
+      subtitle: "continue para {{applicationName}}",
+    },
+  },
+  socialButtonsBlockButton: `Sign In with {{provider|titleize}}`,
+};
 
 export const metadata: Metadata = {
   title: "Clerk Next.js Quickstart",
@@ -31,8 +45,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <ClerkProvider
+      localization={localization}
+      appearance={{
+        baseTheme: neobrutalism,
+      }}
+    >
+      <html lang="pt-BR">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -45,7 +64,9 @@ export default function RootLayout({
               <UserButton />
             </SignedIn>
           </header>
-          {children}
+          <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+            {children}
+          </div>
         </body>
       </html>
     </ClerkProvider>
