@@ -34,7 +34,8 @@ export async function POST(req: Request) {
       const { data: existingUser, error: findError } = await supabase
         .from("users")
         .select("*")
-        .eq("userId", userId);
+        .eq("userId", userId)
+        .maybeSingle();
 
       if (findError) {
         console.error("Error checking existing user:", findError);
@@ -62,6 +63,8 @@ export async function POST(req: Request) {
         console.log("User saved to Supabase:", data);
         return NextResponse.json({ success: true, created: true });
       }
+
+      console.log("api/webhooks/user-created/post: existingUser", existingUser);
 
       // Return 409 Conflict for existing user
       return NextResponse.json(
