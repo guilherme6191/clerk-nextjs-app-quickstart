@@ -30,25 +30,44 @@ export async function POST(req: Request) {
         );
       }
 
-      // Insert the user into your Supabase table
-      const { data, error } = await supabase.from("users").insert([
-        {
-          userId: userId,
-          email: email,
-        },
-      ]);
+      // Check if user already exists in the database
+      const { data: existingUser, error: findError } = await supabase
+        .from("users")
+        .select("*")
+        .eq("userId", userId);
 
-      if (error) {
-        console.error("Error saving user to Supabase:", error);
-        return NextResponse.json(
-          { error: "Failed to save user to Supabase" },
-          { status: 500 }
-        );
+      if (findError) {
+        console.error("Error checking existing user:", findError);
+        return NextResponse.json({ error: findError.details }, { status: 500 });
       }
 
-      console.log("User saved to Supabase:", data);
+      // Only insert if user doesn't exist
+      if (!existingUser) {
+        // Insert the user into your Supabase table
+        const { data, error } = await supabase.from("users").insert([
+          {
+            userId: userId,
+            email: email,
+          },
+        ]);
 
-      return NextResponse.json({ success: true });
+        if (error) {
+          console.error("Error saving user to Supabase:", error);
+          return NextResponse.json(
+            { error: "Failed to save user to Supabase" },
+            { status: 500 }
+          );
+        }
+
+        console.log("User saved to Supabase:", data);
+        return NextResponse.json({ success: true, created: true });
+      }
+
+      // Return 409 Conflict for existing user
+      return NextResponse.json(
+        { success: false, exists: true, message: "User already exists" },
+        { status: 409 }
+      );
     }
 
     return NextResponse.json({ received: true });
